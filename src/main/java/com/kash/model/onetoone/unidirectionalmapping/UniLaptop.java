@@ -12,13 +12,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name ="jpa_laptop")
+@Table(name ="uni_laptop")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 @ToString
-public class Laptop {
+public class UniLaptop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int laptopId;

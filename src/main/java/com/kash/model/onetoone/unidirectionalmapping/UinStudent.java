@@ -1,6 +1,8 @@
 package com.kash.model.onetoone.unidirectionalmapping;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,13 +16,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "student")
+@Table(name = "uni_student")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 @ToString
-public class Student {
+public class UinStudent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +30,7 @@ public class Student {
     private String studentName;
     private String about;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "laptopId")
-    private Laptop laptop;
+    private UniLaptop uniLaptop;
 }
