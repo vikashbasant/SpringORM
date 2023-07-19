@@ -1,9 +1,13 @@
 package com.kash;
 
+import com.kash.model.manytomany.bidirectional.BiCategory;
+import com.kash.model.manytomany.bidirectional.BiProduct;
 import com.kash.model.onetomany.bidirectional.BiOTMAddress;
 import com.kash.model.onetomany.bidirectional.BiOTMStudent;
 import com.kash.model.onetoone.bidirectionalmapping.BiLaptop;
 import com.kash.model.onetoone.bidirectionalmapping.BiStudent;
+import com.kash.repo.CategoryRepo;
+import com.kash.repo.ProductRepo;
 import com.kash.repo.StudentOTMRepo;
 import com.kash.repo.StudentRepo;
 import org.slf4j.Logger;
@@ -30,6 +34,12 @@ public class SpringOrmApplication implements CommandLineRunner {
 
 	@Autowired
 	private StudentOTMRepo studentOTMRepo;
+
+	@Autowired
+	private CategoryRepo categoryRepo;
+
+	@Autowired
+	private ProductRepo productRepo;
 
 	private Logger logger = LoggerFactory.getLogger(SpringOrmApplication.class);
 
@@ -72,7 +82,8 @@ public class SpringOrmApplication implements CommandLineRunner {
 
 
 		//------------One To Many--------------------------//
-		BiOTMStudent student = new BiOTMStudent();
+
+/*		BiOTMStudent student = new BiOTMStudent();
 		student.setStudentName("Kamal");
 		student.setAbout("Student");
 
@@ -112,9 +123,59 @@ public class SpringOrmApplication implements CommandLineRunner {
 		List<BiOTMAddress> addresses = fetchStudent.getAddresses();
 		for (BiOTMAddress address : addresses) {
 			logger.info("Address: {}", address.getCity());
-		}
+		}*/
 
 
+		//----------ManyToMany-----------------//
+
+		/*// =>> Create BiProduct:
+		BiProduct product = new BiProduct();
+		product.setPId("1");
+		product.setProductName("Iphone");
+
+		BiProduct product1 = new BiProduct();
+		product1.setPId("2");
+		product1.setProductName("Sumsung");
+
+		BiProduct product2 = new BiProduct();
+		product2.setPId("3");
+		product2.setProductName("Nothing Phone");
+
+
+		// =>> Create Category:
+		BiCategory category = new BiCategory();
+		category.setCId("1");
+		category.setTitle("Electronics");
+
+		BiCategory category1 = new BiCategory();
+		category1.setCId("2");
+		category1.setTitle("Books");
+
+
+
+		// set the list of product and list of category:
+		category.setBiProducts(Arrays.asList(product, product1));
+		category1.setBiProducts(Arrays.asList(product1, product2));
+
+		product.setBiCategories(Arrays.asList(category, category1));
+		product1.setBiCategories(List.of(category1));
+		product2.setBiCategories(List.of(category));
+
+
+		// now save the category object then automatically save the product object
+		// because we are using cascade property
+		categoryRepo.save(category);
+		categoryRepo.save(category1);*/
+
+		//--------Fetch Info---------//
+		BiCategory fetchCategory = categoryRepo.findById("1").get();
+		System.out.println("How many products present: " + fetchCategory.getBiProducts().size());
+
+		BiCategory fetchCategory1 = categoryRepo.findById("2").get();
+		System.out.println("How many products present: " + fetchCategory1.getBiProducts().size());
+
+		BiProduct fetchProduct = productRepo.findById("1").get();
+		System.out.println("How many categories present: " + fetchProduct.getBiCategories().size());
 
 	}
 }
